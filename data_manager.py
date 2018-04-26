@@ -65,7 +65,7 @@ class data_manager(object):
 
         if (self.cursor+self.val_batch_size) > self.n_samples:
         	self.epoch += 1
-        	self.return_batch = self.train_data[self.cursor:self.n_samples] + self.train_data[:(self.cursor+self.batch_size-self.n_samples)]
+        	self.recent_batch = self.train_data[self.cursor:self.n_samples] + self.train_data[:(self.cursor+self.batch_size-self.n_samples)]
         else:
         	self.recent_batch = self.train_data[self.cursor:(self.cursor+self.batch_size)]
 
@@ -107,7 +107,7 @@ class data_manager(object):
 
         '''
         if (self.t_cursor+self.val_batch_size) > self.n_val_samples:
-        	return_batch = self.val_data[self.t_cursor:self.n_val_samples] + self.val_data[:(self.t_cursor+self.val_batch_size-self.n_val_samples)]
+        	recent_batch = self.val_data[self.t_cursor:self.n_val_samples] + self.val_data[:(self.t_cursor+self.val_batch_size-self.n_val_samples)]
         else:
         	recent_batch = self.val_data[self.t_cursor:(self.t_cursor+self.val_batch_size)]
 
