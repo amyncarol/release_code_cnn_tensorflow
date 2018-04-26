@@ -71,6 +71,8 @@ class data_manager(object):
 
         self.cursor += self.batch_size
 
+        print(len(self.recent_batch))
+
         images_batch = np.zeros((self.batch_size, self.image_size, self.image_size, 3))
         labels_batch = np.zeros((self.batch_size, self.num_class))
         for i, item in enumerate(self.recent_batch):
