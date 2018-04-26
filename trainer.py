@@ -16,7 +16,7 @@ class Solver(object):
         self.data = data
        
         #Number of iterations to train for
-        self.max_iter = 5
+        self.max_iter = 1
         #Every 200 iterations please record the test and train loss
         self.summary_iter = 200
         
@@ -48,7 +48,9 @@ class Solver(object):
         '''
         for step in range(self.max_iter):
             images_batch, labels_batch = self.data.get_train_batch()
-            _ = self.sess.run([self.train], feed_dict={self.net.images:images_batch, self.net.labels:labels_batch})
+            _, loss = self.sess.run([self.train, self.net.class_loss], feed_dict={self.net.images:images_batch, self.net.labels:labels_batch})
+
+            print('Step {}: current loss is {}'.format(step, loss))
 
             if step % self.summary_iter == 0:
                 images_batch, labels_batch = self.data.get_train_batch()
