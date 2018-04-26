@@ -63,7 +63,7 @@ class data_manager(object):
 
         '''
 
-        if (self.cursor+self.val_batch_size) > self.n_samples:
+        if (self.cursor+self.batch_size) > self.n_samples:
         	self.epoch += 1
         	self.recent_batch = self.train_data[self.cursor:self.n_samples] + self.train_data[:(self.cursor+self.batch_size-self.n_samples)]
         else:
