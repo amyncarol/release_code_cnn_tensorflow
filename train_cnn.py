@@ -3,6 +3,7 @@ from cnn import CNN
 from trainer import Solver
 from viz_features import Viz_Feat
 import random
+import numpy as np
 
 
 import matplotlib.pyplot as plt
@@ -30,7 +31,8 @@ plt.plot(solver.train_accuracy, label = 'Training')
 plt.legend()
 plt.xlabel('Iterations (in 200s)')
 plt.ylabel('Accuracy')
-plt.show()
+#plt.show()
+plt.savefig('accuracy.png')
 
 val_data = dm.val_data
 train_data = dm.train_data

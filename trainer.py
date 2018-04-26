@@ -16,7 +16,7 @@ class Solver(object):
         self.data = data
        
         #Number of iterations to train for
-        self.max_iter = 5000
+        self.max_iter = 5
         #Every 200 iterations please record the test and train loss
         self.summary_iter = 200
         

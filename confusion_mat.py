@@ -140,7 +140,8 @@ class Confusion_Matrix(object):
         # Plot confusion matrix (true labels vs. predicted labels)
         plt.xticks(range(width), alphabet[:width], rotation=90)
         plt.yticks(range(height), alphabet[:height])
-        plt.show()
+        #plt.show()
+        plt.savefig('cm_cnn.png')
         return plt
 
 
