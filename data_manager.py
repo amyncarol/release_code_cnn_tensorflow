@@ -64,20 +64,20 @@ class data_manager(object):
         '''
 
         if (self.cursor+self.batch_size) > self.n_samples:
-        	self.epoch += 1
-        	self.recent_batch = self.train_data[self.cursor:self.n_samples] + self.train_data[:(self.cursor+self.batch_size-self.n_samples)]
+            self.epoch += 1
+            self.recent_batch = self.train_data[self.cursor:self.n_samples] + self.train_data[:(self.cursor+self.batch_size-self.n_samples)]
+            self.cursor += self.batch_size - self.n_samples
         else:
-        	self.recent_batch = self.train_data[self.cursor:(self.cursor+self.batch_size)]
-
-        self.cursor += self.batch_size
-
+            self.recent_batch = self.train_data[self.cursor:(self.cursor+self.batch_size)]
+            self.cursor += self.batch_size
+        
         print(len(self.recent_batch))
 
         images_batch = np.zeros((self.batch_size, self.image_size, self.image_size, 3))
         labels_batch = np.zeros((self.batch_size, self.num_class))
         for i, item in enumerate(self.recent_batch):
-        	images_batch[i] = item['features']
-        	labels_batch[i] = item['label']
+            images_batch[i] = item['features']
+            labels_batch[i] = item['label']
 
         return images_batch, labels_batch
 
@@ -109,17 +109,17 @@ class data_manager(object):
 
         '''
         if (self.t_cursor+self.val_batch_size) > self.n_val_samples:
-        	recent_batch = self.val_data[self.t_cursor:self.n_val_samples] + self.val_data[:(self.t_cursor+self.val_batch_size-self.n_val_samples)]
+            recent_batch = self.val_data[self.t_cursor:self.n_val_samples] + self.val_data[:(self.t_cursor+self.val_batch_size-self.n_val_samples)]
+            self.t_cursor += self.val_batch_size - self.n_val_samples
         else:
-        	recent_batch = self.val_data[self.t_cursor:(self.t_cursor+self.val_batch_size)]
-
-        self.t_cursor += self.val_batch_size
+            recent_batch = self.val_data[self.t_cursor:(self.t_cursor+self.val_batch_size)]
+            self.t_cursor += self.val_batch_size
 
         images_batch = np.zeros((self.val_batch_size, self.image_size, self.image_size, 3))
         labels_batch = np.zeros((self.val_batch_size, self.num_class))
         for i, item in enumerate(recent_batch):
-        	images_batch[i] = item['features']
-        	labels_batch[i] = item['label']
+            images_batch[i] = item['features']
+            labels_batch[i] = item['label']
 
         return images_batch, labels_batch
 
