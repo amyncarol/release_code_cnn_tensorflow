@@ -71,7 +71,7 @@ class data_manager(object):
             self.recent_batch = self.train_data[self.cursor:(self.cursor+self.batch_size)]
             self.cursor += self.batch_size
         
-        print(len(self.recent_batch))
+        #print(len(self.recent_batch))
 
         images_batch = np.zeros((self.batch_size, self.image_size, self.image_size, 3))
         labels_batch = np.zeros((self.batch_size, self.num_class))

@@ -51,14 +51,17 @@ class CNN(object):
 
                 ###SLIM BY DEFAULT ADDS A RELU AT THE END OF conv2d and fully_connected
                 
-                net = slim.conv2d(images, 5, [15,15], scope='conv_1')
+                ##for CNN
+                # net = slim.conv2d(images, 5, [15,15], scope='conv_1')
+                # net = slim.max_pool2d(net, [3, 3], scope='pool_1')
+                # net = slim.flatten(net, scope='flat')
 
-                net = slim.max_pool2d(net, [3, 3], scope='pool_1')
- 
-                net = slim.flatten(net, scope='flat')
+                ##for fully connected 
+                net = slim.flatten(images, scope='flat')
+                net = slim.fully_connected(net, 1, scope='fc_0')
                 
+                ###same for both
                 net = slim.fully_connected(net, 512, scope='fc_1')
-
                 net = slim.fully_connected(net, 25, activation_fn=None, scope='fc_2')
 
         return net
