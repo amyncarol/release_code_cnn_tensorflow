@@ -51,6 +51,8 @@ class data_manager(object):
         self.load_train_set()
         self.load_validation_set()
 
+        self.n_samples = len(self.train_data)
+        self.n_val_samples = len(self.val_data)
 
     def get_train_batch(self):
 
@@ -61,37 +63,63 @@ class data_manager(object):
 
         '''
 
+        if (self.cursor+self.val_batch_size) > self.n_samples:
+        	self.epoch += 1
+        	self.return_batch = self.train_data[self.cursor:self.n_samples] + self.train_data[:(self.cursor+self.batch_size-self.n_samples)]
+        else:
+        	self.recent_batch = self.train_data[self.cursor:(self.cursor+self.batch_size)]
+
+        self.cursor += self.batch_size
+
+        images_batch = np.zeros((self.batch_size, self.image_size, self.image_size, 3))
+        labels_batch = np.zeros((self.batch_size, self.num_class))
+        for i, item in enumerate(self.recent_batch):
+        	images_batch[i] = item['features']
+        	labels_batch[i] = item['label']
+
+        return images_batch, labels_batch
 
 
-    def get_empty_state(self):
-        images = np.zeros((self.batch_size, self.image_size,self.image_size,3))
-        return images
+    # def get_empty_state(self):
+    #     images = np.zeros((self.batch_size, self.image_size,self.image_size,3))
+    #     return images
 
-    def get_empty_label(self):
-        labels = np.zeros((self.batch_size, self.num_class))
-        return labels
+    # def get_empty_label(self):
+    #     labels = np.zeros((self.batch_size, self.num_class))
+    #     return labels
 
-    def get_empty_state_val(self):
-        images = np.zeros((self.val_batch_size, self.image_size,self.image_size,3))
-        return images
+    # def get_empty_state_val(self):
+    #     images = np.zeros((self.val_batch_size, self.image_size,self.image_size,3))
+    #     return images
 
-    def get_empty_label_val(self):
-        labels = np.zeros((self.val_batch_size, self.num_class))
-        return labels
+    # def get_empty_label_val(self):
+    #     labels = np.zeros((self.val_batch_size, self.num_class))
+    #     return labels
 
 
 
     def get_validation_batch(self):
 
         '''
-        Compute a training batch for the neural network 
+        Compute a val batch for the neural network 
 
         The batch size should be size 400
 
         '''
-        #FILL IN
+        if (self.t_cursor+self.val_batch_size) > self.n_val_samples:
+        	return_batch = self.val_data[self.t_cursor:self.n_val_samples] + self.val_data[:(self.t_cursor+self.val_batch_size-self.n_val_samples)]
+        else:
+        	recent_batch = self.val_data[self.t_cursor:(self.t_cursor+self.val_batch_size)]
 
+        self.t_cursor += self.val_batch_size
 
+        images_batch = np.zeros((self.val_batch_size, self.image_size, self.image_size, 3))
+        labels_batch = np.zeros((self.val_batch_size, self.num_class))
+        for i, item in enumerate(recent_batch):
+        	images_batch[i] = item['features']
+        	labels_batch[i] = item['label']
+
+        return images_batch, labels_batch
 
     def compute_features_baseline(self, image):
         '''

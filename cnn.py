@@ -87,4 +87,4 @@ class CNN(object):
 
             self.class_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = classes,logits = predicts))
 
-            self.accurracy = self.get_acc(classes,predicts)
+            self.accuracy = self.get_acc(classes,predicts)

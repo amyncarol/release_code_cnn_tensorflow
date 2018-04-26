@@ -17,7 +17,7 @@ class Solver(object):
        
         #Number of iterations to train for
         self.max_iter = 5000
-        #Every 200 iterations please record the trest and train loss
+        #Every 200 iterations please record the test and train loss
         self.summary_iter = 200
         
 
@@ -46,5 +46,17 @@ class Solver(object):
         Implement SGD using the data manager to compute the batches
         Make sure to record the training and test accuracy through out the process
         '''
+        for step in range(self.max_iter):
+            images_batch, labels_batch = self.data.get_train_batch()
+            _ = self.sess.run([self.train], feed_dict={self.net.images:images_batch, self.net.labels:labels_batch})
+
+            if step % self.summary_iter == 0:
+                images_batch, labels_batch = self.data.get_train_batch()
+                train_accuracy = self.sess.run([self.net.accuracy], feed_dict={self.net.images:images_batch, self.net.labels:labels_batch})
+                self.train_accuracy.append(train_accuracy)
+
+                images_batch, labels_batch = self.data.get_validation_batch()
+                test_accuracy = self.sess.run([self.net.accuracy], feed_dict={self.net.images:images_batch, self.net.labels:labels_batch})
+                self.test_accuracy.append(test_accuracy)
 
    
