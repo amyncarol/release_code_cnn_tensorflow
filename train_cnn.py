@@ -26,13 +26,13 @@ solver = Solver(cnn,dm)
 
 solver.optimize()
 
-plt.plot(solver.test_accuracy,label = 'Validation')
-plt.plot(solver.train_accuracy, label = 'Training')
-plt.legend()
-plt.xlabel('Iterations (in 200s)')
-plt.ylabel('Accuracy')
-#plt.show()
-plt.savefig('accuracy.png')
+# plt.figure(0)
+# plt.plot(solver.test_accuracy,label = 'Validation')
+# plt.plot(solver.train_accuracy, label = 'Training')
+# plt.legend()
+# plt.xlabel('Iterations (in 200s)')
+# plt.ylabel('Accuracy')
+# plt.savefig('accuracy.png')
 
 val_data = dm.val_data
 train_data = dm.train_data

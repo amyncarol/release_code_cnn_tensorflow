@@ -27,7 +27,7 @@ class CNN(object):
 
         self.logits = self.build_network(self.images, num_outputs=self.output_size)
 
-        self.labels = tf.placeholder(tf.float32, [None, self.num_class])
+        self.labels = tf.placeholder(tf.float32, [None, self.num_class], name='labels')
 
         self.loss_layer(self.logits, self.labels)
         self.total_loss = tf.losses.get_total_loss()
@@ -51,14 +51,16 @@ class CNN(object):
 
                 ###SLIM BY DEFAULT ADDS A RELU AT THE END OF conv2d and fully_connected
                 
-                ##for CNN
-                # net = slim.conv2d(images, 5, [15,15], scope='conv_1')
-                # net = slim.max_pool2d(net, [3, 3], scope='pool_1')
-                # net = slim.flatten(net, scope='flat')
+                #for CNN
+                net = slim.conv2d(images, 5, [15,15], scope='conv_1')
+                net = tf.identity(net, name="conv")
 
-                ##for fully connected 
-                net = slim.flatten(images, scope='flat')
-                net = slim.fully_connected(net, 1, scope='fc_0')
+                net = slim.max_pool2d(net, [3, 3], scope='pool_1')
+                net = slim.flatten(net, scope='flat')
+
+                ###for fully connected 
+                # net = slim.flatten(images, scope='flat')
+                # net = slim.fully_connected(net, 1, scope='fc_0')
                 
                 ###same for both
                 net = slim.fully_connected(net, 512, scope='fc_1')
